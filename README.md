@@ -1,7 +1,25 @@
 # Data_Structure
-Basic Data Structure  
-2022春 数据结构的一些学习记录：  
-线性表    
-栈   
-队列   
-二叉树  
+
+## Spring 2022
+
+线性表
+>Vector  
+List
+
+栈
+>seqStack  
+linkStack
+
+队列
+>seqQueue  
+linkQueue
+
+二叉树
+>Binary Tree  
+Huffmancode  
+Tree  
+Forest  
+Equivalent Class  
+
+优先队列
+>priorityQueue
