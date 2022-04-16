@@ -22,4 +22,4 @@ Forest
 Equivalent Class  
 
 优先队列
->priorityQueue
+>BinaryHeap
