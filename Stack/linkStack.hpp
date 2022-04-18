@@ -31,6 +31,7 @@ public:
     {
         clear();
         delete top;
+        top = nullptr;
     }
     bool isEmpty() const
     {

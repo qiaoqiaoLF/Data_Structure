@@ -28,6 +28,7 @@ public:
     {
         clear();
         delete head;
+        head = nullptr;
     }
     int length() const;
     int search(const elemType &x) const;

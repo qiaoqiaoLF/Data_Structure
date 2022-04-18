@@ -31,7 +31,9 @@ public:
     {
         clear();
         delete head;
+        head = nullptr;
         delete tail;
+        tail = nullptr;
     }
     int length() const
     {

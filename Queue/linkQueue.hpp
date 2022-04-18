@@ -66,6 +66,7 @@ public:
             temp = front;
             front = front->next;
             delete temp;
+            temp = nullptr;
             return tmp;
         }
     }

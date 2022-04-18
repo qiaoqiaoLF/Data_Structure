@@ -174,6 +174,7 @@ void BTree<elemType>::DelTree(Node<elemType> *t)
         DelTree(t->left);
         DelTree(t->right);
         delete t;
+        t= nullptr;
     }
 }
 
@@ -618,6 +619,7 @@ void BTree<elemType>::DelTree()
         if (t->left)
             stack.push(t->left);
         delete t;
+        t = nullptr;
     }
 }
 

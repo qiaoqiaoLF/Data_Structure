@@ -23,3 +23,8 @@ Equivalent Class
 
 优先队列
 >BinaryHeap
+
+动态查找
+>Binary Search Tree  
+Adelson-Velsky and Landis Tree  
+Red-Black Tree
