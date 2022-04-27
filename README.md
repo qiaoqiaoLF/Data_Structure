@@ -22,7 +22,10 @@ Forest
 Equivalent Class  
 
 优先队列
->BinaryHeap
+>BinaryHeap  
+Leftlists Heap  
+Skew Heap (Self-adjusting Heap)  
+Binomial Heap
 
 动态查找
 >Binary Search Tree  

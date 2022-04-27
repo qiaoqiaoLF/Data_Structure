@@ -132,55 +132,29 @@ void BinarySearchTree<elemType, Key>::insert(const elemType &x, const Key &k)
 }
 
 // recursion
- template <typename elemType, typename Key>
- void BinarySearchTree<elemType, Key>::remove(const Key &k)
- {
-     remove(k, root);
- }
+template <typename elemType, typename Key>
+void BinarySearchTree<elemType, Key>::remove(const Key &k)
+{
+    remove(k, root);
+}
 
 // iteration
 // template <typename elemType, typename Key>
 // void BinarySearchTree<elemType, Key>::remove(const Key &k)
 // {
 //     Node *p = root;
-//     Node **parent = nullptr;
+//     Node **parent = &root;
 //     Node *temp = nullptr;
 //     while (p && p->key != k)
 //     {
-//         if (p->key > k)
-//         {
-//             parent = &(p->left);
-//             p = p->left;
-//         }
-//         else
-//         {
-//             parent = &(p->right);
-//             p = p->right;
-//         }
+//         parent = (p->key > k)?&(p->left) : &(p->right);
+//         p = *parent;
 //     }
 //     if (!p)
 //         return;
 //     else
 //     {
-//         if (!p->left && !p->right)
-//         {
-//             delete p;
-//             p = nullptr;
-//             *parent = nullptr;
-//         }
-//         else if (!p->left && p->right)
-//         {
-//             *parent = p->right;
-//             delete p;
-//             p = nullptr;
-//         }
-//         else if (p->left && !p->right)
-//         {
-//             *parent = p->left;
-//             delete p;
-//             p = nullptr;
-//         }
-//         else
+//         if(p->left && p->right)
 //         {
 //             temp = p;
 //             p = p->right;
@@ -192,6 +166,12 @@ void BinarySearchTree<elemType, Key>::insert(const elemType &x, const Key &k)
 //             (*parent)->data = p->data;
 //             (*parent)->key = p->key;
 //             temp->left = p->right;
+//             delete p;
+//             p = nullptr;
+//         }
+//         else
+//         {
+//             *parent = (p->left)?p->left:p->right;
 //             delete p;
 //             p = nullptr;
 //         }
@@ -233,27 +213,7 @@ void BinarySearchTree<elemType, Key>::remove(const Key &k, Node *&t)
         return;
     if (t->key == k)
     {
-        if (!t->left && !t->right)
-        {
-            delete t;
-            t = nullptr;
-            return;
-        }
-        if (t->left && !t->right)
-        {
-            temp = t->left;
-            delete t;
-            t = temp;
-            return;
-        }
-        if (!t->left && t->right)
-        {
-            temp = t->right;
-            delete t;
-            t = temp;
-            return;
-        }
-        else
+        if (t->left && t->right)
         {
             temp = t->right;
             while (temp->left)
@@ -261,6 +221,14 @@ void BinarySearchTree<elemType, Key>::remove(const Key &k, Node *&t)
             t->data = temp->data;
             t->key = temp->key;
             remove(t->key, t->right);
+            return;
+        }
+        else
+        {
+
+            temp = t;
+            t = (t->left) ? t->left : t->right;
+            delete temp;
             return;
         }
     }
