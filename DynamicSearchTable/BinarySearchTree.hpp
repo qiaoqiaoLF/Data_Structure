@@ -36,6 +36,11 @@ public:
     elemType *find(const Key &k) const;
     void insert(const elemType &x, const Key &k);
     void remove(const Key &k);
+    void clear()
+    {
+        deleteTree(root);
+        root = nullptr;
+    }
     void InOrder() const
     {
         InOrder(root);
@@ -54,6 +59,7 @@ template <typename elemType, typename Key>
 BinarySearchTree<elemType, Key>::~BinarySearchTree()
 {
     deleteTree(root);
+    root = nullptr;
 }
 
 template <typename elemType, typename Key>
