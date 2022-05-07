@@ -30,4 +30,7 @@ Binomial Heap
 动态查找
 >Binary Search Tree  
 Adelson-Velsky and Landis Tree  
-Red-Black Tree
+Red-Black Tree  
+Hash Table  
+
+排序
