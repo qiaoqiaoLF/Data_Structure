@@ -141,13 +141,11 @@ int Sort<elemType>::Division(elemType a[], int low, int high)
     {
         while (low < high && a[high] >= key)
             high--;
-        if (low < high)
-            a[low] = a[high];
+        a[low] = a[high];
 
         while (low < high && a[low] <= key)
             low++;
-        if (low < high)
-            a[high] = a[low];
+        a[high] = a[low];
     }
     a[low] = key;
     return low;
