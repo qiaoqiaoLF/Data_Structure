@@ -38,9 +38,9 @@ Hash Table
 Shell Sort  
 Selection Sort  
 Heap Sort  
-Bubble Sort
+Bubble Sort  
 Quick Sort  
 Merge Sort  
-Bucket Sort
+Bucket Sort  
 Radix Sort  
-Counting Sort
+Counting Sort  
