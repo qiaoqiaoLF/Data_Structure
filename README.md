@@ -42,5 +42,5 @@ Bubble Sort
 Quick Sort  
 Merge Sort  
 Bucket Sort  
-Radix Sort  
 Counting Sort  
+Radix Sort  
