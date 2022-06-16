@@ -3,7 +3,7 @@
 ## Spring 2022
 
 List
->Sequencial List
+>Sequencial List  
 Linked List
 
 Stack
