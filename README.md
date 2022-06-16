@@ -46,13 +46,11 @@ Counting Sort
 Radix Sort  
 
 Graph
->Adjacency Martrix
-Adjacency List
-Euler Circuit
-Activity On Edge Network
-Acticity On Vertice Network
-Kruskal's Algorithm
-Prim's Algoithm
-Dijkstra's Algorithm
-
-
+>Adjacency Martrix  
+Adjacency List  
+Euler Circuit  
+Activity On Edge Network  
+Acticity On Vertice Network  
+Kruskal's Algorithm  
+Prim's Algoithm  
+Dijkstra's Algorithm  
