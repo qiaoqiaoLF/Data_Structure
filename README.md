@@ -2,38 +2,38 @@
 
 ## Spring 2022
 
-线性表
->Vector  
 List
+>Sequencial List
+Linked List
 
-栈
->seqStack  
-linkStack
+Stack
+>Sequencial Stack  
+Linked Stack
 
-队列
->seqQueue  
-linkQueue
+Queue
+>Sequencial Queue  
+Linked Queue
 
-二叉树
+Binary Tree
 >Binary Tree  
 Huffmancode  
 Tree  
 Forest  
 Equivalent Class  
 
-优先队列
+Priority Queue
 >BinaryHeap  
 Leftlists Heap  
 Skew Heap (Self-adjusting Heap)  
 Binomial Heap
 
-动态查找
+Dynamic Search
 >Binary Search Tree  
 Adelson-Velsky and Landis Tree  
 Red-Black Tree  
 Hash Table  
 
-排序
+Sort
 >Insertion Sort  
 Shell Sort  
 Selection Sort  
@@ -44,3 +44,15 @@ Merge Sort
 Bucket Sort  
 Counting Sort  
 Radix Sort  
+
+Graph
+>Adjacency Martrix
+Adjacency List
+Euler Circuit
+Activity On Edge Network
+Acticity On Vertice Network
+Kruskal's Algorithm
+Prim's Algoithm
+Dijkstra's Algorithm
+
+
