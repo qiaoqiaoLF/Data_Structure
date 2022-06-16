@@ -1,4 +1,4 @@
-# Data_Structure
+# Data Structure
 
 ## Spring 2022
 
