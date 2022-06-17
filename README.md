@@ -43,10 +43,10 @@ Quick Sort
 Merge Sort  
 Bucket Sort  
 Counting Sort  
-Radix Sort  
+Randix Sort  
 
 Graph
->Adjacency Martrix  
+>Adjacency Matrix  
 Adjacency List  
 Euler Circuit  
 Activity On Edge Network  
@@ -54,3 +54,4 @@ Acticity On Vertice Network
 Kruskal's Algorithm  
 Prim's Algoithm  
 Dijkstra's Algorithm  
+Floyd's Algorithm  

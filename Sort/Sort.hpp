@@ -5,14 +5,8 @@
 #include <iostream>
 #include <vector>
 using namespace std;
-const int BUCKET_NUM = 10000;
 
-// struct BucketNode
-// {
-//     int data;
-//     BucketNode *next;
-//     BucketNode(int d, BucketNode *n = nullptr) : data(d), next(n) {}
-// };
+
 struct ListNode
 {
     explicit ListNode(int i = 0) : mData(i), mNext(nullptr) {}
@@ -23,10 +17,6 @@ template <typename elemType>
 class Sort
 {
 private:
-    // static BucketNode *MergeSort(BucketNode *head);
-    // static BucketNode *Merge(BucketNode *head1, BucketNode *head2);
-    // static BucketNode *BucketSort(BucketNode *&head, int length);
-
     static ListNode *Merge(ListNode *head1, ListNode *head2);
     static ListNode *insert(ListNode *head, int val);
 
@@ -48,11 +38,11 @@ public:
     static void BubbleSort(elemType a[], int size); // O(N^2)
     static void QuickSort(elemType a[], int size);  // O(N*logN) ~ O(N^2)
 
-    static void MergeSort(elemType a[], int size);
+    static void MergeSort(elemType a[], int size); // O(N*logN)
 
-    static void CountingSort(int a[], int size);
-    static void BucketSort(int a[], int size);
-    static void RandixSort(int a[], int size);
+    static void CountingSort(int a[], int size); // O(N)
+    static void BucketSort(int a[], int size);   // O(N)
+    static void RandixSort(int a[], int size);   // O(N)
 };
 
 template <typename elemType>
@@ -280,7 +270,7 @@ void Sort<elemType>::CountingSort(int a[], int size)
         count[i] = count[i] + count[i - 1]; // count[i] == number of element equal or less than i + min
 
     int *result = new int[size];
-    for (int i = size-1; i >= 0; i--)
+    for (int i = size - 1; i >= 0; i--)
         result[(count[a[i] - min]--) - 1] = a[i];
 
     for (int i = 0; i < size; i++)
@@ -288,6 +278,7 @@ void Sort<elemType>::CountingSort(int a[], int size)
     delete[] count;
     delete[] result;
 }
+
 template <typename elemType>
 ListNode *Sort<elemType>::insert(ListNode *head, int val)
 {
@@ -306,6 +297,7 @@ ListNode *Sort<elemType>::insert(ListNode *head, int val)
     pre->mNext = newNode;
     return dummyNode.mNext;
 }
+
 template <typename elemType>
 ListNode *Sort<elemType>::Merge(ListNode *head1, ListNode *head2)
 {
@@ -332,262 +324,84 @@ ListNode *Sort<elemType>::Merge(ListNode *head1, ListNode *head2)
 
     return dummyNode.mNext;
 }
+
 template <typename elemType>
 void Sort<elemType>::BucketSort(int arr[], int n)
 {
-    vector<ListNode *> buckets(BUCKET_NUM, (ListNode *)(0));
-    for (int i = 0; i < n; ++i)
+    ListNode *head = new ListNode{a[0]};
+    ListNode *tail = head;
+
+    ListNode *HEAD[10]{nullptr};
+    ListNode *TAIL[10]{nullptr};
+    for (int i = 1; i < size; i++)
     {
-        int index = arr[i] / BUCKET_NUM;
-        ListNode *head = buckets.at(index);
-        buckets.at(index) = insert(head, arr[i]);
+        tail->mNext = new ListNode{a[i]};
+        tail = tail->mNext;
     }
-    ListNode *head = buckets.at(0);
-    for (int i = 1; i < BUCKET_NUM; ++i)
+    int base = 1;
+    int max = a[0];
+    int length = 0;
+    for (int i = 0; i < size; i++)
+        if (max < a[i])
+            max = a[i];
+
+    if (max == 0)
+        length = 0;
+    else
+        while (max > 0)
+        {
+            max /= 10;
+            length++;
+        }
+    for (int i = 0; i < length; i++)
     {
-        head = Merge(head, buckets.at(i));
+        tail = head;
+        for (int i = 0; i < 10; i++)
+            HEAD[i] = TAIL[i] = nullptr;
+        while (tail != nullptr)
+        {
+            if (HEAD[tail->mData / base % 10] == nullptr)
+            {
+                HEAD[tail->mData / base % 10] = tail;
+                TAIL[tail->mData / base % 10] = tail;
+            }
+            else
+            {
+                TAIL[tail->mData / base % 10]->mNext = tail;
+                TAIL[tail->mData / base % 10] = TAIL[tail->mData / base % 10]->mNext;
+            }
+            tail = tail->mNext;
+        }
+        for (int i = 0; i < 10; i++)
+            if (TAIL[i] != nullptr)
+                TAIL[i]->mNext = nullptr;
+        head = nullptr;
+        for (int i = 0; i < 10; i++)
+        {
+            if (HEAD[i] == nullptr)
+                continue;
+            if (head == nullptr)
+                head = HEAD[i];
+            else
+                tail->mNext = HEAD[i];
+            tail = TAIL[i];
+        }
+        base *= 10;
     }
-    for (int i = 0; i < n; ++i)
+
+    for (int i = 0; i < size; i++)
     {
-        arr[i] = head->mData;
+        a[i] = head->mData;
         head = head->mNext;
     }
 }
 
-// template <typename elemType>
-// void Sort<elemType>::BucketSort(int a[], int size)
-// {
-//     int max = a[0];
-//     for (int i = 0; i < size; i++)
-//         if (max < a[i])
-//             max = a[i];
-//     int length = 1;
-//     while (max / length >= 10)
-//         length *= 10;
-//     BucketNode *head = new BucketNode{a[0], nullptr};
-//     BucketNode *tail = head;
-//     for (int i = 1; i < size; ++i)
-//     {
-//         tail->next = new BucketNode{a[i], nullptr};
-//         tail = tail->next;
-//     }
-//     BucketSort(head, length);
-//     tail = head;
-//     for (int i = 0; i < size; ++i)
-//     {
-//         a[i] = tail->data;
-//         tail = tail->next;
-//     }
-// }
-// template <typename elemType>
-// BucketNode *Sort<elemType>::BucketSort(BucketNode *&head, int length)
-// {
-//     if (head == nullptr)
-//         return nullptr;
-//     if (length >= 100)
-//     {
-//         BucketNode *HEAD[10]{nullptr};
-//         BucketNode *TAIL[10]{nullptr};
-//         BucketNode *tmp = head;
-//         while (tmp != nullptr)
-//         {
-//             if (HEAD[(tmp->data / length) % 10] == nullptr)
-//             {
-//                 HEAD[tmp->data / length] = new BucketNode{tmp->data, nullptr};
-//                 TAIL[tmp->data / length] = HEAD[tmp->data / length];
-//             }
-//             else
-//             {
-//                 TAIL[tmp->data / length]->next = new BucketNode{tmp->data, nullptr};
-//                 TAIL[tmp->data / length] = TAIL[tmp->data / length]->next;
-//             }
-//             tmp = tmp->next;
-//         }
-//         for (int i = 0; i < 10; ++i)
-//             TAIL[i] = BucketSort(HEAD[i], length / 10);
-//         head = nullptr;
-//         int j = 0;
-//         for (int i = 0; i <= 9; i++)
-//         {
-//             if (HEAD[i] == nullptr)
-//                 continue;
-//             if (head == nullptr)
-//             {
-//                 head = HEAD[i];
-//                 j = i;
-//             }
-//             else
-//             {
-//                 TAIL[j]->next = HEAD[i];
-//                 j = i;
-//             }
-//         }
-//         return TAIL[j];
-//     }
-//     else
-//         return MergeSort(head);
-// }
-
-// template <typename elemType>
-// BucketNode *Sort<elemType>::MergeSort(BucketNode *head)
-// {
-//     if (head == nullptr || head->next == nullptr)
-//         return head;
-//     BucketNode *fast = head;
-//     BucketNode *slow = head;
-//     while (fast->next != nullptr && fast->next->next != nullptr)
-//     {
-//         fast = fast->next->next;
-//         slow = slow->next;
-//     }
-//     BucketNode *tmp = slow->next;
-//     slow->next = nullptr;
-//     slow = tmp;
-//     MergeSort(head);
-//     MergeSort(slow);
-//     return Merge(head, slow);
-// }
-
-// template <typename elemType>
-// BucketNode *Sort<elemType>::Merge(BucketNode *head1, BucketNode *head2)
-// {
-//     BucketNode *NewHead = nullptr;
-//     BucketNode *tail = nullptr;
-//     BucketNode *RETURNtail = nullptr;
-//     BucketNode *head = head1;
-//     BucketNode *head22 = head2;
-//     if (head1->data <= head2->data)
-//     {
-//         NewHead = new BucketNode{head1->data, nullptr};
-//         head1 = head1->next;
-//     }
-//     else
-//     {
-//         NewHead = new BucketNode{head2->data, nullptr};
-//         head2 = head2->next;
-//     }
-//     tail = NewHead;
-//     while (head1 != nullptr && head2 != nullptr)
-//     {
-
-//         if (head1->data <= head2->data)
-//         {
-//             tail->next = new BucketNode{head1->data, nullptr};
-//             head1 = head1->next;
-//         }
-//         else
-//         {
-//             tail->next = new BucketNode{head2->data, nullptr};
-//             head2 = head2->next;
-//         }
-//         RETURNtail = tail;
-//         tail = tail->next;
-//     }
-//     while (head1 != nullptr)
-//     {
-//         tail->next = new BucketNode{head1->data, nullptr};
-//         head1 = head1->next;
-//         RETURNtail = tail;
-//         tail = tail->next;
-//     }
-//     while (head2 != nullptr)
-//     {
-//         tail->next = new BucketNode{head2->data, nullptr};
-//         head2 = head2->next;
-//         RETURNtail = tail;
-//         tail = tail->next;
-//     }
-//     BucketNode *del1 = head->next, *del2 = head->next;
-//     while (del1 != nullptr)
-//     {
-//         del2 = del1->next;
-//         delete del1;
-//         del1 = del2;
-//     }
-//     del1 = head22;
-//     while (del1 != nullptr)
-//     {
-//         del2 = del1->next;
-//         delete del1;
-//         del1 = del2;
-//     }
-//     head->data = NewHead->data;
-//     head->next = NewHead->next;
-//     return RETURNtail;
-// }
-
 template <typename elemType>
 void Sort<elemType>::RandixSort(int a[], int size)
 {
-    // ListNode *head = new ListNode{a[0]};
-    // ListNode *tail = head;
-
-    // ListNode *HEAD[10]{nullptr};
-    // ListNode *TAIL[10]{nullptr};
-    // for (int i = 1; i < size; i++)
-    // {
-    //     tail->mNext = new ListNode{a[i]};
-    //     tail = tail->mNext;
-    // }
-    // int base = 1;
-    // int max = a[0];
-    // int length = 0;
-    // for (int i = 0; i < size; i++)
-    //     if (max < a[i])
-    //         max = a[i];
-
-    // if (max == 0)
-    //     length = 0;
-    // else
-    //     while (max > 0)
-    //     {
-    //         max /= 10;
-    //         length++;
-    //     }
-    // for (int i = 0; i < length; i++)
-    // {
-    //     tail = head;
-    //     for (int i = 0; i < 10; i++)
-    //         HEAD[i] = TAIL[i] = nullptr;
-    //     while (tail != nullptr)
-    //     {
-    //         if (HEAD[tail->mData / base % 10] == nullptr)
-    //         {
-    //             HEAD[tail->mData / base % 10] = tail;
-    //             TAIL[tail->mData / base % 10] = tail;
-    //         }
-    //         else
-    //         {
-    //             TAIL[tail->mData / base % 10]->mNext = tail;
-    //             TAIL[tail->mData / base % 10] = TAIL[tail->mData / base % 10]->mNext;
-    //         }
-    //         tail = tail->mNext;
-    //     }
-    //     for (int i = 0; i < 10; i++)
-    //         if (TAIL[i] != nullptr)
-    //             TAIL[i]->mNext = nullptr;
-    //     head = nullptr;
-    //     for (int i = 0; i < 10; i++)
-    //     {
-    //         if (HEAD[i] == nullptr)
-    //             continue;
-    //         if (head == nullptr)
-    //             head = HEAD[i];
-    //         else
-    //             tail->mNext = HEAD[i];
-    //         tail = TAIL[i];
-    //     }
-    //     base *= 10;
-    // }
-
-    // for (int i = 0; i < size; i++)
-    // {
-    //     a[i] = head->mData;
-    //     head = head->mNext;
-    // }
 
     int count[10]{0};
-    int *result = new int [size]();
+    int *result = new int[size]();
     int base = 1;
     int max = a[0];
     int length = 0;
