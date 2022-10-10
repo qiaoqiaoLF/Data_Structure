@@ -162,7 +162,7 @@ void adjListGraph<TypeOfVer, TypeOfEdge>::dfs(int start, bool visited[]) const
     while (!p)
     {
         if (!visited[p->end])
-            def(p->end, visited);
+            dfs(p->end, visited);
         p = p->next;
     }
 }
